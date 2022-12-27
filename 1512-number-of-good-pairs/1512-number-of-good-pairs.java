@@ -13,4 +13,3 @@ class Solution {
         return pairs;
     }
 }
-// output != index  ->  K=index ✓
