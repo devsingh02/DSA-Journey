@@ -12,3 +12,8 @@ class Solution {
     }
 }
 
+// key must be unique, and only indices are unique, value maybe same
+// BUT
+// from K -> V ✓ can be found
+// from V -> K X cannot be found
+// ∴ since Index is to be found, put V=index K=element (∵ K->V)
