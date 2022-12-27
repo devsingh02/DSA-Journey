@@ -1,3 +1,5 @@
+// New element forms pair with all previous same elements(count)
+
 class Solution {
     public int numIdenticalPairs(int[] nums) {
         HashMap<Integer, Integer> hm = new HashMap<>(); // <element, count>
@@ -14,6 +16,8 @@ class Solution {
         return pairs;
     }
 }
+
+//SOLUTION 2
 // class Solution {
 //     public int numIdenticalPairs(int[] nums) {
 //         HashMap<Integer, Integer> map = new HashMap<>(); // <element, count>
