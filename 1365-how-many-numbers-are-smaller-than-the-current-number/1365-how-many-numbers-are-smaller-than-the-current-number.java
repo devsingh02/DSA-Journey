@@ -3,15 +3,16 @@ class Solution {
     public int[] smallerNumbersThanCurrent(int[] nums) {
         HashMap<Integer, Integer> hm = new HashMap<>(); // <K=element, V=1st_ Index>
         int[] sort = nums.clone(); Arrays.sort(sort);
-        int[] count = new int[nums.length];
+        // int[] count = new int[nums.length];
         
         for (int i = 0; i < sort.length; i++) {
             hm.putIfAbsent(sort[i], i);
         }
         for (int i = 0; i < nums.length; i++) {
-            count[i] = hm.get(nums[i]);
+            // count[i] = hm.get(nums[i]);
+            sort[i] = hm.get(nums[i]);
         }
-        return count;
+        return sort;
     }
 }
 
