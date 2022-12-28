@@ -1,18 +1,18 @@
-class Solution {
+class Solution {    //O(n)
     public int[] smallerNumbersThanCurrent(int[] nums) {
-        int[] count = new int[101];
+        int[] count = new int[101];  // constraint given 0-100
         int[] res = new int[nums.length];
         
-        for (int i =0; i < nums.length; i++) {
+        for (int i = 0; i < nums.length; i++) {  //O(n)
             count[nums[i]]++;
         }
         
-        for (int i = 1 ; i <= 100; i++) {
+        for (int i = 1 ; i <= 100; i++) {  //O(n)
             count[i] += count[i-1];    
         }
         
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == 0)
+        for (int i = 0; i < nums.length; i++) {  //O(n)
+            if (nums[i] == 0)   //nothing less than 0
                 res[i] = 0;
             else 
                 res[i] = count[nums[i] - 1];
@@ -22,7 +22,7 @@ class Solution {
     }
 }
 
-// HASHMAP
+// HASHMAP  (Sorting occuring ∴ more time (O(n*logn)))
 // class Solution {
 //     public int[] smallerNumbersThanCurrent(int[] nums) {
 //         HashMap<Integer, Integer> hm = new HashMap<>(); // <K=element, V=1st_ Index>
