@@ -1,14 +1,26 @@
-class Solution {
+class Solution {    //O(m)
     public int numJewelsInStones(String jewels, String stones) {
-        HashSet<Character> J = new HashSet<>();
-        for (char ch : jewels.toCharArray()) 
-            J.add(ch); //input
         int count = 0;
-        for (char ch : stones.toCharArray()) 
-            if (J.contains(ch)) count++;
+        for (char st : stones.toCharArray()) {
+            if (jewels.indexOf(st) != -1) 
+                count++;
+        }
         return count;
     }
 }
+
+// USING HASHSET    O(n+m)
+// class Solution {
+//     public int numJewelsInStones(String jewels, String stones) {
+//         HashSet<Character> J = new HashSet<>();
+//         for (char ch : jewels.toCharArray()) 
+//             J.add(ch); //input
+//         int count = 0;
+//         for (char ch : stones.toCharArray()) 
+//             if (J.contains(ch)) count++;
+//         return count;
+//     }
+// }
 
 
 // USING HASHMAP
