@@ -1,14 +1,15 @@
 class Solution {
     public int numJewelsInStones(String jewels, String stones) {
         HashSet<Character> J = new HashSet<>();
-        for (char ch : jewels.toCharArray()) J.add(ch); //input
+        for (char ch : jewels.toCharArray()) 
+            J.add(ch); //input
         int count = 0;
-        for (char ch : stones.toCharArray()) {
+        for (char ch : stones.toCharArray()) 
             if (J.contains(ch)) count++;
-        }
         return count;
     }
 }
+
 
 // USING HASHMAP
 // class Solution {
