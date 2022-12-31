@@ -1,56 +1,31 @@
 // piles[] -> no. of stones in ith pile
 
+
+// Bucket Sort Solution :-  O(n) + small part of O(n) == O(n)
 class Solution {
-    public int minStoneSum(int[] piles, int k) {
-        /* Using array instead of PriorityQueue */
-        int ans = 0;
-        int[] buckets = new int[10001];
-        for (int pile : piles) {
-            buckets[pile] += 1;
-            ans += pile;
+    public static int minStoneSum(int[] piles, int k) {
+        int[] a = new int[10001]; // 1 to 10,000  + 0
+        
+        int max = -1, sum = 0; // Domain -> 1 to 10,000
+        for (int I : piles) {   //O(n)
+            a[I]++;
+            max = Math.max(I, max);
+            sum += I;
         }
-
-        for (int i = 10000; i >= 0; --i) {
-            while (buckets[i] > 0) {
-                int toBeRemoved = i / 2;
-                ans -= toBeRemoved;
-
-                buckets[i] -= 1;
-                buckets[i - toBeRemoved] += 1;
-                k -= 1;
-
-                if (k == 0) {
-                    return ans;
-                }
+        
+        for (int I = max; I >= 1 && k > 0; I--) {
+            while (a[I] > 0 && k > 0) {
+                int new_element = I - I/2;
+                a[I]--; a[new_element]++;
+                k--;
+                sum -= (int)I/2;
             }
         }
-        return ans;
+        return sum;
     }
 }
 
-// class Solution {
-//     public static int minStoneSum(int[] piles, int k) {
-//         int[] arr = new int[10001];
-//         int max = -1;
-//         for(int i : piles){
-//             arr[i]++;
-//             max = Math.max(max , i);
-//         }
-//         for(int i=max; i>0 && k>0; i--){
-//             while(arr[i]>0 && k>0){
-//                 arr[i]--;
-//                 arr[(i+1)/2]++;
-//                 k--;
-//             }
-//         }
-//         int answer = 0;
-//         for(int i=max; i>0; i--){
-//             answer += arr[i]*i;
-//         }
-//         return answer;
-//     }
-// }
-
+// PRIORITY QUEUE :-
 // class Solution {
 //     public int minStoneSum(int[] piles, int k) {
 //         PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
