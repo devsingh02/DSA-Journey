@@ -1,7 +1,7 @@
 // piles[] -> no. of stones in ith pile
 
 
-// Bucket Sort Solution :-  O(n) + small part of O(n) == O(n)
+// Bucket Sort Solution :-  O(n) + small part of O(n) , worst case = 2*O(n)
 class Solution {
     public static int minStoneSum(int[] piles, int k) {
         int[] a = new int[10001]; // 1 to 10,000  + 0
