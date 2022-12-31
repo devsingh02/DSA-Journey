@@ -1,26 +1,48 @@
 // piles[] -> no. of stones in ith pile
 
-
 class Solution {
-    public int minStoneSum(int[] piles, int k) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
-         
-        int sum = 0;
-        for (int I : piles) {       //n
-            pq.offer(I);    //logn
-            sum += I;   // maintain sum from start to avoid addtional O(nlogn) in end
+    public static int minStoneSum(int[] piles, int k) {
+        int[] arr = new int[10001];
+        int max = -1;
+        for(int i : piles){
+            arr[i]++;
+            max = Math.max(max , i);
         }
-        
-        while (k > 0) {
-            int max = pq.poll(); //removed the element
-            int new_element = max - (int)max/2 ;
-            sum -= (int)max/2;
-            pq.offer(new_element);
-            k--;
+        for(int i=max; i>0 && k>0; i--){
+            while(arr[i]>0 && k>0){
+                arr[i]--;
+                arr[(i+1)/2]++;
+                k--;
+            }
         }
-        return sum;
+        int answer = 0;
+        for(int i=max; i>0; i--){
+            answer += arr[i]*i;
+        }
+        return answer;
     }
 }
+
+// class Solution {
+//     public int minStoneSum(int[] piles, int k) {
+//         PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
+         
+//         int sum = 0;
+//         for (int I : piles) {       //n
+//             pq.offer(I);    //logn
+//             sum += I;   // maintain sum from start to avoid addtional O(nlogn) in end
+//         }
+        
+//         while (k > 0) {
+//             int max = pq.poll(); //removed the element
+//             int new_element = max - (int)max/2 ;
+//             sum -= (int)max/2;
+//             pq.offer(new_element);
+//             k--;
+//         }
+//         return sum;
+//     }
+// }
 
 
 // BRUTE FORCE 1 : Time Limit Exceeded  O(k*n)
