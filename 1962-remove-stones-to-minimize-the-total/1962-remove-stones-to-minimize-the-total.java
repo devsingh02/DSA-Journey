@@ -2,22 +2,29 @@
 
 class Solution {
     public int minStoneSum(int[] piles, int k) {
-        PriorityQueue<Integer> pq=new PriorityQueue<>((a,b)->b-a);
-        int sum=0;
-        for(int i:piles){
-          pq.add(i);
-          sum+=i;
+        /* Using array instead of PriorityQueue */
+        int ans = 0;
+        int[] buckets = new int[10001];
+        for (int pile : piles) {
+            buckets[pile] += 1;
+            ans += pile;
         }
-        for(int i=k;i>0;i--){
-          int a=pq.poll();
-          int b=a%2==0?a:a+1;
-          int c=(int)(Math.round(b/2));
-          pq.add(c);
-          sum-=(a-c);
+
+        for (int i = 10000; i >= 0; --i) {
+            while (buckets[i] > 0) {
+                int toBeRemoved = i / 2;
+                ans -= toBeRemoved;
+
+                buckets[i] -= 1;
+                buckets[i - toBeRemoved] += 1;
+                k -= 1;
+
+                if (k == 0) {
+                    return ans;
+                }
+            }
         }
-        return sum;
-        
-// Collections.reverseOrder()
+        return ans;
     }
 }
 
