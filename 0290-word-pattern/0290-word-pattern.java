@@ -3,20 +3,25 @@ class Solution {
         
         HashMap<String, Character> hm = new HashMap<>();
         
-        int ct = 0; s = s + " ";
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i)==' ') ct++;
-        }
-        if (ct != pattern.length()) return false;        
+        // int ct = 0; s = s + " ";
+        // for (int i = 0; i < s.length(); i++) {
+        //     if (s.charAt(i)==' ') ct++;
+        // }
+        // if (ct != pattern.length()) return false;        
         
         
-        int pos = 0, end; 
+        int start = 0, end; s = s + " ";
         
         for (int i = 0; i < pattern.length(); i++) {
             
-            end = s.indexOf(' ', pos);
-            String word = s.substring(pos, end);
-            pos = end + 1;
+            if (start >= s.length()) return false;
+            
+            
+            end = s.indexOf(' ', start);
+            String word = s.substring(start, end);
+            start = end + 1;
+            
+            if (i==pattern.length()-1 && start<s.length()) return false;
             
             char ch = pattern.charAt(i);
             
