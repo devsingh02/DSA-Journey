@@ -2,12 +2,12 @@
 import java.util.StringTokenizer;
 class Solution {
     public boolean wordPattern(String pattern, String s) {
-        StringTokenizer st = new StringTokenizer(s, " "); 
+        StringTokenizer st = new StringTokenizer(s, " ");  // O(n*1)
         HashMap<String, Character> hm = new HashMap<>();
         
         if (pattern.length() != st.countTokens()) return false;
         
-        for (int i = 0; i < pattern.length(); i++) {
+        for (int i = 0; i < pattern.length(); i++) {    //O(n)
             String word = st.nextToken();   //curr_word
             char ch = pattern.charAt(i);    //curr_ch
             
