@@ -1,3 +1,29 @@
+// STRINGTOKENIZER + HASHMAP
+import java.util.StringTokenizer;
+class Solution {
+    public boolean wordPattern(String pattern, String s) {
+        StringTokenizer st = new StringTokenizer(s, " "); 
+        HashMap<String, Character> hm = new HashMap<>();
+        
+        if (pattern.length() != st.countTokens()) return false;
+        
+        for (int i = 0; i < pattern.length(); i++) {
+            String word = st.nextToken();   //curr_word
+            char ch = pattern.charAt(i);    //curr_ch
+            
+            if (hm.containsKey(word) && hm.get(word) == ch)
+                continue;
+            if (!hm.containsKey(word) && !hm.containsValue(ch)) {
+                hm.put(word, ch);
+                continue;
+            }
+            return false;
+        }
+        return true;
+    }
+}
+
+// INDEXOF METHOD + HASHMAP
 // class Solution {
 //     public boolean wordPattern(String pattern, String s) {
         
@@ -33,26 +59,3 @@
 //         return true;
 //     }
 // }
-import java.util.StringTokenizer;
-class Solution {
-    public boolean wordPattern(String pattern, String s) {
-        StringTokenizer st = new StringTokenizer(s, " "); 
-        HashMap<String, Character> hm = new HashMap<>();
-        
-        if (pattern.length() != st.countTokens()) return false;
-        
-        for (int i = 0; i < pattern.length(); i++) {
-            String word = st.nextToken();
-            char ch = pattern.charAt(i);    //curr_ch
-            
-            if (hm.containsKey(word) && hm.get(word) == ch)
-                continue;
-            if (!hm.containsKey(word) && !hm.containsValue(ch)) {
-                hm.put(word, ch);
-                continue;
-            }
-            return false;
-        }
-        return true;
-    }
-}
