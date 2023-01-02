@@ -1,45 +1,24 @@
-import java.util.Arrays;
-
-public class Solution {
-
+class Solution {
     public int lengthOfLongestSubstring(String s) {
-        if(s.length() <= 1) return s.length();
-
-
-        final byte[] countTemplate = new byte[]{
-                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-        };
-
-
-        final byte[] strBytes = s.getBytes();
-        int endPos = 0, startPos = 0, max = 1;
-
-        countTemplate[strBytes[0]-32]=1;
-        int size=1;
-
-        for(endPos = 1; endPos<s.length(); endPos++){
-            while(countTemplate[strBytes[endPos]-32]==1){
-                countTemplate[strBytes[startPos]-32]=-1;
-                size--;
-                startPos++;
+        Map<Character, Integer> map = new HashMap<>();
+        int i = 0;
+        int j = 0;
+        int max = 0;
+        while(j < s.length()){
+            map.put(s.charAt(j), map.getOrDefault(s.charAt(j), 0) + 1);
+            if(map.size() == j - i + 1){
+                max = Math.max(max, j - i + 1);
+                j++;
             }
-
-            countTemplate[strBytes[endPos]-32]=1;
-            size++;
-            max = Math.max(max, size);
+            else if(map.size() < j - i + 1){
+                while(map.size() < j - i + 1){
+                    map.put(s.charAt(i), map.get(s.charAt(i)) - 1);
+                    if(map.get(s.charAt(i)) == 0) map.remove(s.charAt(i));
+                    i++;
+                }
+                j++;
+            }
         }
-
         return max;
     }
 }
