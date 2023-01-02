@@ -1,28 +1,46 @@
-class Solution {
+import java.util.Arrays;
+
+public class Solution {
+
     public int lengthOfLongestSubstring(String s) {
-        if (s == null) {
-            throw new IllegalArgumentException("Input string is null");
-        }
+        if(s.length() <= 1) return s.length();
 
-        int len = s.length();
-        if (len <= 1) {
-            return len;
-        }
 
-        HashMap<Character, Integer> map = new HashMap<>();
-        int start = 0;
-        int maxLen = 0;
+        final byte[] countTemplate = new byte[]{
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+                -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+        };
 
-        for (int end = 0; end < len; end++) {
-            char eChar = s.charAt(end);
-            if (map.containsKey(eChar)) {
-                start = Math.max(start, map.get(eChar) + 1);
+
+        final byte[] strBytes = s.getBytes();
+        int endPos = 0, startPos = 0, max = 1;
+
+        countTemplate[strBytes[0]-32]=1;
+        int size=1;
+
+        for(endPos = 1; endPos<s.length(); endPos++){
+            while(countTemplate[strBytes[endPos]-32]==1){
+                countTemplate[strBytes[startPos]-32]=-1;
+                size--;
+                startPos++;
             }
-            map.put(eChar, end);
-            maxLen = Math.max(maxLen, end - start + 1);
+
+            countTemplate[strBytes[endPos]-32]=1;
+            size++;
+            max = Math.max(max, size);
         }
 
-        return maxLen;
+        return max;
     }
 }
 
