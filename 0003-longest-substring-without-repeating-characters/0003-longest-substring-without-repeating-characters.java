@@ -1,3 +1,4 @@
+// O(n*n)
 class Solution {
     public int lengthOfLongestSubstring(String s) {
         HashSet<Character> hs = new HashSet<>();
