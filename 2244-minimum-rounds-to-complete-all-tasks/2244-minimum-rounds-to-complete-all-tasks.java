@@ -1,31 +1,39 @@
 // 1 round -> 2/3 same level tasks
 class Solution {
+    public static int[] dp; 
     public int minimumRounds(int[] tasks) {
-        // Sort the tasks array in ascending order
+        dp = new int[tasks.length];
+        Arrays.fill(dp,-1);
         Arrays.sort(tasks);
-        int result = 0, count = 0;
-        // Iterate through each task
-        for (int i = 0; i < tasks.length; i++) {
-            // Increment the count of tasks with the same value
-            count++;
-            // If we have reached the last task or the current task is different from the next task
-            if (i == tasks.length - 1 || tasks[i] != tasks[i + 1]) {
-                // If there is only one task with this value, we cannot create groups of 3
-                // and we return -1
-                if (count == 1) {
-                    return -1;
-                }
-                // Add the number of full groups of 3 we can create from the tasks with this value
-                result += count / 3;
-                // If there are remaining tasks that cannot be included in a group of 3,
-                // we need one more round to process these tasks
-                if(count % 3 != 0) result++;
-                // Reset the count for the next set of tasks
-                count = 0;
-           }
+        int res = Integer.MAX_VALUE;
+        res = minimumRoundsHelper(tasks,0,0);
+        if(res ==Integer.MAX_VALUE){
+            return -1;
         }
-        // Return the total number of rounds needed
-        return result;
+       return res;
+    }
+    
+    private int minimumRoundsHelper(int[] tasks, int index, int total){
+        if(index >= tasks.length){
+            return 0;
+        }
+        if(dp[index] != -1){
+            return dp[index];
+        }
+        int a = Integer.MAX_VALUE;
+        int b = Integer.MAX_VALUE;
+        if(index+2 < tasks.length && tasks[index] == tasks[index+1] && tasks[index] == tasks[index+2])
+           a  = minimumRoundsHelper(tasks,index+3,total+1);
+        if(index+1 < tasks.length && tasks[index] == tasks[index+1]){
+           b = minimumRoundsHelper(tasks,index+2,total+1);
+        }
+        int res = Math.min(a,b);
+        if(res == Integer.MAX_VALUE){
+            dp[index] = Integer.MAX_VALUE;
+        }else{
+            dp[index] = 1+ res;
+        }
+        return dp[index];
     }
 }
 // class Solution {
