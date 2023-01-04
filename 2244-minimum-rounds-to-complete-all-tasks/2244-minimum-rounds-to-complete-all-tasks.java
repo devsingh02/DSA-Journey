@@ -10,11 +10,11 @@ class Solution {
         for (int ct : hm.values()) {
             if (ct == 1) return -1;
             
-            if (ct%3==0) rnds += ct/3;
-            else if (ct%3==1) rnds += ct/3-1 + 2;
-            else rnds += ct/3 + 1;
-            // rnds += ct/3;
-            // if(ct%3!=0) ct++;
+            // if (ct%3==0) rnds += ct/3;
+            // else if (ct%3==1) rnds += ct/3-1 + 2;
+            // else rnds += ct/3 + 1;
+            rnds += ct/3;
+            if(ct%3!=0) rnds++;
         }
         return rnds;
     }
