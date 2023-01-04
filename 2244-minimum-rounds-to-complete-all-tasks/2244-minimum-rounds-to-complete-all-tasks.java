@@ -1,66 +1,22 @@
 // 1 round -> 2/3 same level tasks
+
 class Solution {
     public int minimumRounds(int[] tasks) {
-        Arrays.sort(tasks);
-        int ans =0;
-        int index =0;
-        for(int i=0;i<tasks.length;i++){
-            int ab =count(tasks,tasks[i],index);
-            index+=ab;
-            if(ab<2){  return -1; }
-            i+=(ab-1);
-            int b =ab;
-            if(ab==2){  ans+=1;   }
-            else if(ab%3==0){
-                while (true){
-                    if(ab==0||ab==1){  break;  }
-                    ab/=3;
-                    ans+=ab;
-                    ab%=3;
-                }
-            }
-            else{
-                while (true){
-                    ab/=3;
-                    int added =ab;
-                    ans+=ab;
-                    ab =b;
-                    ab%=3;
-                    if(ab==1||ab==2){
-                        ans--;
-                        ans+=2;
-                        break;
-                    }} 
-                    }}
-        if(ans==0){  return -1;  }
-        return ans;
-    }
-    public static int count(int []tasks,int val,int j){
-        int count =0;
-        for(int i =j;i<tasks.length;i++){
-            if(tasks[i]==val){  count++;  }
-            if(tasks[i]!=val){ break;  }
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        for (int I : tasks) {
+            hm.put(I, hm.getOrDefault(I, 0) + 1);
         }
-        return count;
+        int rnds = 0;
+        for (int ct : hm.values()) {
+            if (ct == 1) return -1;
+            
+            if (ct%3==0) rnds += ct/3;
+            else if (ct%3==1) rnds += ct/3-1 + 2;
+            else rnds += ct/3 + 1;
+        }
+        return rnds;
     }
 }
-// class Solution {
-//     public int minimumRounds(int[] tasks) {
-//         HashMap<Integer, Integer> hm = new HashMap<>();
-//         for (int I : tasks) {
-//             hm.put(I, hm.getOrDefault(I, 0) + 1);
-//         }
-//         int rnds = 0;
-//         for (int ct : hm.values()) {
-//             if (ct == 1) return -1;
-            
-//             if (ct%3==0) rnds += ct/3;
-//             else if (ct%3==1) rnds += ct/3-1 + 2;
-//             else rnds += ct/3 + 1;
-//         }
-//         return rnds;
-//     }
-// }
     
 // HashMap    
 // class Solution {
