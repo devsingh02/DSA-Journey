@@ -1,7 +1,7 @@
 class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> ans = new ArrayList<>();
-        findCombinations(0, candidates, target, ans, new Stack<>());
+        findCombinations(0, candidates, target, ans, new ArrayList<>());
         return ans;
     }
 
