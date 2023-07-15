@@ -1,11 +1,11 @@
 class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> ans = new ArrayList<>();
-        findCombinations(0, candidates, target, ans, new ArrayList<>());
+        findCombinations(0, candidates, target, ans, new Stack<>());
         return ans;
     }
 
-    private void findCombinations(int ind, int[] arr, int target, List<List<Integer>> ans, List<Integer> ds) {
+    private void findCombinations(int ind, int[] arr, int target, List<List<Integer>> ans, Stack<Integer> ds) {
         if (target == 0) {
             ans.add(new ArrayList<>(ds));
             return;
@@ -17,9 +17,9 @@ class Solution {
 
         // Choice 1: Take the current element
         if (arr[ind] <= target) {
-            ds.add(arr[ind]);
+            ds.push(arr[ind]);
             findCombinations(ind, arr, target - arr[ind], ans, ds);
-            ds.remove(ds.size() - 1);
+            ds.pop();
         }
 
         // Choice 2: Don't take the current element
