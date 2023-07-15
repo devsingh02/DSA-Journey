@@ -1,4 +1,4 @@
-// CORRECT
+// // CORRECT
 // class Solution {
 //     public List<List<Integer>> combinationSum(int[] candidates, int target) {
 //         List<List<Integer>> ans = new ArrayList<>();
@@ -30,13 +30,13 @@
 
 
 
-// // MEHTOD 1 : SubSequence 
+// MEHTOD 1 : SubSequence 
 
 class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> subset = new ArrayList<>();
-        List<Integer> curset = new ArrayList<>();
-        helper(0, target, candidates, curset, subset);
+        // List<Integer> curset = new ArrayList<>();
+        helper(0, target, candidates, new ArrayList<>(), subset);
         return subset;
     }
     static void helper(int i, int target, int[] candidates, List<Integer> curset, List<List<Integer>> subset) {
