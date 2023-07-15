@@ -39,7 +39,7 @@ class Solution {
         helper(0, target, candidates, curset, subset);
         return subset;
     }
-     void helper(int i, int target, int[] candidates, List<Integer> curset, List<List<Integer>> subset) {
+    static void helper(int i, int target, int[] candidates, List<Integer> curset, List<List<Integer>> subset) {
         if (i == candidates.length || target < 0) {
             if (target == 0) subset.add(new ArrayList<>(curset));
             return;
