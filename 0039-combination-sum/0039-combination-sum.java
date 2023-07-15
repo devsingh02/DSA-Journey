@@ -13,7 +13,7 @@ class Solution {
             return;
         }
         // choice 1 : Take
-        if (candidates[i] <= target) { // ***
+        if (candidates[i] <= target) { // *** Prevents unnnecessary recursive calls and backtracking
             curset.add(candidates[i]);
             helper(i, target - candidates[i], candidates, curset, subset);
             curset.remove(curset.size() - 1);
@@ -24,8 +24,8 @@ class Solution {
 }
 
 
-// METHOD 2 : C(n,k) 
-//
+// // METHOD 2 : C(n,k) 
+
 // class Solution {
 //     public List<List<Integer>> combinationSum(int[] candidates, int target) {
 //         List<List<Integer>> subset = new ArrayList<>();
