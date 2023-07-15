@@ -5,7 +5,7 @@ class Solution {
         return ans;
     }
 
-    private void findCombinations(int ind, int[] arr, int target, List<List<Integer>> ans, Stack<Integer> ds) {
+    private void findCombinations(int ind, int[] arr, int target, List<List<Integer>> ans, List<Integer> ds) {
         if (target == 0) {
             ans.add(new ArrayList<>(ds));
             return;
@@ -17,9 +17,9 @@ class Solution {
 
         // Choice 1: Take the current element
         if (arr[ind] <= target) {
-            ds.push(arr[ind]);
+            ds.add(arr[ind]);
             findCombinations(ind, arr, target - arr[ind], ans, ds);
-            ds.pop();
+            ds.remove(ds.size() - 1);
         }
 
         // Choice 2: Don't take the current element
