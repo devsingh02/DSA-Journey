@@ -35,8 +35,8 @@
 class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> subset = new ArrayList<>();
-        // List<Integer> curset = new ArrayList<>();
-        helper(0, target, candidates, new ArrayList<>(), subset);
+        List<Integer> curset = new ArrayList<>();
+        helper(0, target, candidates, curset, subset);
         return subset;
     }
     static void helper(int i, int target, int[] candidates, List<Integer> curset, List<List<Integer>> subset) {
@@ -45,10 +45,12 @@ class Solution {
             return;
         }
         // choice 1 : Take
+        if (candidates[i] <= target) {
         curset.add(candidates[i]);
         helper(i, target - candidates[i], candidates, curset, subset);
         //choice 2 : Don't Take
         curset.remove(curset.size() - 1);
+        }
         helper(i + 1, target, candidates, curset, subset);
     }
 }
