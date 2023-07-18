@@ -11,15 +11,16 @@ class Solution {
             subset.add(new ArrayList<>(curset));
             return;
         }
-        if (i == candidates.length) return;
+        if (i == candidates.length || candidates[i] > target) return;
         
         //TAKE ALL DUPLICATES
-        if (candidates[i] <= target) {
+        // if (candidates[i] <= target) {
             curset.add(candidates[i]);
             helper(i + 1, target - candidates[i], candidates, curset, subset);
             curset.remove(curset.size() - 1);
-        }
-        else return;
+        // }
+        // else return;
+        //SKIP ALL DUPLICATES
         while (i + 1 < candidates.length && candidates[i] == candidates[i + 1]) i++; //at last duplicate
         helper(i + 1, target, candidates, curset, subset);
     }
