@@ -17,6 +17,6 @@ class Solution {
         curset.remove(curset.size() - 1);
         //SKIP ALL DUPILCATES
         while (i + 1 < nums.length && nums[i] == nums[i + 1]) i++; //i now at last duplicate
-        helper(i + 1, nums, curset, subset);
+        helper(i + 1, nums, curset, subset); //returns if all last duplicates
     }
 }
