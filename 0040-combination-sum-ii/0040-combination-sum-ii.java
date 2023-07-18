@@ -7,7 +7,7 @@ class Solution {
         return subset;
     }
     static void helper(int i, int target, int[] candidates, List<Integer> curset, List<List<Integer>> subset) {
-        if (target == 0) {
+        if (target == 0) {  //*** COND. ABOVE since MUST TAKE LAST ELEMENT
             subset.add(new ArrayList<>(curset));
             return;
         }
