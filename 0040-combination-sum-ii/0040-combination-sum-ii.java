@@ -19,6 +19,7 @@ class Solution {
             helper(i + 1, target - candidates[i], candidates, curset, subset);
             curset.remove(curset.size() - 1);
         }
+        else return;
         while (i + 1 < candidates.length && candidates[i] == candidates[i + 1]) i++; //at last duplicate
         helper(i + 1, target, candidates, curset, subset);
     }
