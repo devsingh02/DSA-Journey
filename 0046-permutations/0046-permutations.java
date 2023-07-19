@@ -1,54 +1,31 @@
 // METHOD 1 : Kunal / String
 
-// class Solution {
-//     public List<List<Integer>> permute(int[] nums) {
-//         List<List<Integer>> ans = new ArrayList<>();
-//         permutation(new ArrayList<>(), 0, nums, ans);
-//         return ans;
-//     }
-//     static void permutation(List<Integer> p, int ind, int[] nums, List<List<Integer>> ans) {
-//         if (ind == nums.length) {
-//             ans.add(new ArrayList<>(p));
-//             return;
-//         }
-//         int ch = nums[ind];
-//         for (int i = 0; i <= p.size(); i++) {
-//             // List<Integer> f = new ArrayList<>(); for(int b = 0; b < a; b++) f.add(nums[b]);
-//             // List<Integer> l = new ArrayList<>(); for(int b = a; b < p.size(); b++) l.add(nums[b]);
-//             List<Integer> newp = new ArrayList<>();
-//             for (int k = 0; k < p.size(); k++) {
-//                 if (k == i) {
-//                     newp.add(ch);
-//                     newp.add(p.get(k));
-//                     continue;
-//                 }
-//                 newp.add(p.get(k));
-//             }
-//             if (i == p.size()) newp.add(ch);
-//             permutation(newp, ind + 1, nums, ans);
-//         }
-//     }
-// }
-
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
-        permutation(new ArrayList<>(), nums, ans);
+        permutation(new ArrayList<>(), 0, nums, ans);
         return ans;
     }
-
-    static void permutation(List<Integer> p, int[] nums, List<List<Integer>> ans) {
-        if (p.size() == nums.length) {
+    static void permutation(List<Integer> p, int ind, int[] nums, List<List<Integer>> ans) {
+        if (ind == nums.length) {
             ans.add(new ArrayList<>(p));
             return;
         }
-
-        for (int ch : nums) {
-            if (!p.contains(ch)) {
-                List<Integer> newp = new ArrayList<>(p);
-                newp.add(ch);
-                permutation(newp, nums, ans);
+        int ch = nums[ind];
+        for (int i = 0; i <= p.size(); i++) {
+            // List<Integer> f = new ArrayList<>(); for(int b = 0; b < a; b++) f.add(nums[b]);
+            // List<Integer> l = new ArrayList<>(); for(int b = a; b < p.size(); b++) l.add(nums[b]);
+            List<Integer> newp = new ArrayList<>();
+            for (int k = 0; k < p.size(); k++) {
+                if (k == i) {
+                    newp.add(ch);
+                    newp.add(p.get(k));
+                    continue;
+                }
+                newp.add(p.get(k));
             }
+            if (i == p.size()) newp.add(ch);
+            permutation(newp, ind + 1, nums, ans);
         }
     }
 }
