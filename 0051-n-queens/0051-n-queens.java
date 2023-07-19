@@ -125,12 +125,12 @@
 //         return res;
 //     }
 // }
-// Approach 1 : TC : O(n * 3n)  SC : O(n)
+
+// Approach 2 : TC : O(n) SC : O(n)
 class Solution {
     public List<List<String>> solveNQueens(int n) {
         return generateChessBoard(n);
     }
-	// Make n*n Chess Board Initially filled with '.'
     static List<List<String>> generateChessBoard(int n) {
         char board[][] = new char[n][n];
         for(int i = 0; i < n; i++) {
@@ -138,58 +138,44 @@ class Solution {
                 board[i][j] = '.';
             }
         }
-        List<List<String>> ans = new ArrayList<>(); // List for returning 
-        int column = 0; // check for 0th column rest our recursion & Backtracking will take care of it
-        checkForAllColumns(column,board,ans);
+        List<List<String>> ans = new ArrayList<>();
+        int column = 0;
+        int CD[] = new int[n];  // checking queens in centre left diagonal
+        int RD[] = new int[2*n+1]; // checking queens in upper part right diagonal
+        int LD[] = new int[2*n+1];  //  checking queens in lower part of left diagonal 
+        checkForAllColumns(column,board,ans,CD,LD,RD);
         return ans;
     }
-	
-	// Recursive Function for checking all the possibles cases for rows and columns
-    static void checkForAllColumns(int column,char board[][],List<List<String>> ans) {
-       // base case
-	   if(column == board.length) {
-            ans.add(convertIntoStringList(board)); // convert method to convert char array to list of String and then returned list will be added into our ans list
+    static void checkForAllColumns(int column,char board[][],List<List<String>> ans,int CD[],int LD[],int RD[]) {
+        if(column == board.length) {
+            ans.add(convertIntoStringList(board));
             return;
         }
         for(int row = 0; row < board.length; row++) {
-            if(safe(row,column,board)) { // safe function for checking 'Q' is present or not
-              board[row][column] = 'Q'; // if safe then put Queen in that position
-              checkForAllColumns(column+1,board,ans); // call for another column i.e column+1
-              board[row][column] = '.'; // during backtracking make 'Q' to '.'
+		    // 1. CD[row] will take care of centre left diagonal
+			// 2. LD[row+column] will take care of lower part of left diagonal
+			// 3. RD[(n-1) + (column-row)] will take care of upper part of right diagonal ( n = board.length)
+            if(CD[row] == 0 && LD[column+row] == 0 && RD[(board.length-1) + (column-row)] == 0) {
+			  // During placement of Queens
+              board[row][column] = 'Q';
+              CD[row] = 1;
+              LD[column+row] = 1;  
+              RD[(board.length-1) + (column-row)] = 1;
+              checkForAllColumns(column+1,board,ans,CD,LD,RD);
+              // During Backtracking
+			  board[row][column] = '.';
+              CD[row] = 0;
+              LD[column+row] = 0;  
+              RD[(board.length-1) + (column-row)] = 0;  
             }
         }
     }
-	// Converting char arr[] to List<String>
     static List<String> convertIntoStringList(char board[][]) {
         List<String> al = new ArrayList<>();
         for(int i = 0; i < board.length; i++) {
-            String s = new String(board[i]); // String Constructor will convert char array to String
-            al.add(s); // add that string into our list
+            String s = new String(board[i]);
+            al.add(s);
         }
         return al;
-    }
-    static boolean safe(int r,int c,char board[][]) {
-        int newr = r, newc = c;
-        // Left Diagonal - Upper part 
-        while(r >= 0 && c >= 0) {
-            if(board[r][c] == 'Q') return false;
-            r--;c--;
-        }
-        r = newr;
-        c = newc;
-        // Right Diagonal - Lower part 
-        while(c >= 0 && r < board.length) {
-            if(board[r][c] == 'Q') return false;
-            r++;
-            c--;
-        }
-        r = newr;
-        c = newc;
-        // Centre Diagonal 
-        while(c >= 0) {
-            if(board[r][c] == 'Q') return false;
-            c--;
-        }
-        return true;
     }
 }
