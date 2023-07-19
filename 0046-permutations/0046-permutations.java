@@ -15,15 +15,6 @@ class Solution {
         for (int i = 0; i <= p.size(); i++) {
             List<Integer> newp = new ArrayList<>(p);
             newp.add(i, ch);
-            // for (int k = 0; k < p.size(); k++) {
-            //     if (k == i) {
-            //         newp.add(ch);
-            //         newp.add(p.get(k));
-            //         continue;
-            //     }
-            //     newp.add(p.get(k));
-            // }
-            // if (i == p.size()) newp.add(ch);
             permutation(newp, ind + 1, nums, ans);
         }
     }
