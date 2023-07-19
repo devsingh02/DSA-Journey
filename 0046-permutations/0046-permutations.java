@@ -1,53 +1,32 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
-        generatePermutations(new ArrayList<>(), nums, ans);
+        permutation(new ArrayList<>(), 0, nums, ans);
         return ans;
     }
-    static void generatePermutations(List<Integer> current, int[] nums, List<List<Integer>> permutations) {
-        if (current.size() == nums.length) {
-            permutations.add(new ArrayList<>(current));
+    static void permutation(List<Integer> p, int ind, int[] nums, List<List<Integer>> ans) {
+        if (ind == nums.length) {
+            ans.add(new ArrayList<>(p));
             return;
         }
-         for (int i = 0; i < nums.length; i++) {
-            if (current.contains(nums[i])) {
-                continue;
+        int ch = nums[ind];
+        for (int i = 0; i <= p.size(); i++) {
+            // List<Integer> f = new ArrayList<>(); for(int b = 0; b < a; b++) f.add(nums[b]);
+            // List<Integer> l = new ArrayList<>(); for(int b = a; b < p.size(); b++) l.add(nums[b]);
+            List<Integer> newp = new ArrayList<>();
+            for (int k = 0; k < p.size(); k++) {
+                if (k == i) {
+                    newp.add(ch);
+                    newp.add(p.get(k));
+                    continue;
+                }
+                newp.add(p.get(k));
             }
-            current.add(nums[i]);
-            generatePermutations(current, nums, permutations);
-            current.remove(current.size() - 1);
+            if (i == p.size()) newp.add(ch);
+            permutation(newp, ind + 1, nums, ans);
         }
     }
 }
-
-
-// class Solution {
-//     public List<List<Integer>> permute(int[] nums) {
-//         List<List<Integer>> ans = new ArrayList<>();
-//         permutation(new ArrayList<>(), 0, nums, ans);
-//         return ans;
-//     }
-//     static void permutation(List<Integer> p, int ind, int[] nums, List<List<Integer>> ans) {
-//         if (ind == nums.length) {
-//             ans.add(new ArrayList<>(p));
-//             return;
-//         }
-//         int ch = nums[ind];
-//         for (int i = 0; i <= p.size(); i++) {
-//             // List<Integer> f = new ArrayList<>(); for(int b = 0; b < a; b++) f.add(nums[b]);
-//             // List<Integer> l = new ArrayList<>(); for(int b = a; b < p.size(); b++) l.add(nums[b]);
-//             List<Integer> newp = new ArrayList<>();
-//             for (int k = 0; k < p.size(); k++) {
-//                 if (k == i) {
-//                     newp.add(ch);
-//                     k--; continue;
-//                 }
-//                 newp.add(p.get(k));
-//             }
-//             permutation(newp, ind + 1, nums, ans);
-//         }
-//     }
-// }
 
 // // class Solution {
 // //     private void recurPermute(int index, int[] nums, List<List<Integer>> ans) {
