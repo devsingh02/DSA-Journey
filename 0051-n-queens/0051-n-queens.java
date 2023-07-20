@@ -38,7 +38,7 @@ class Solution {
     }
 
     public static List<String> arrayToList(char board[][]){
-        List<String> res = new LinkedList<>();   // maybe LinkedList slightly better
+        List<String> res = new ArrayList<>();   // maybe LinkedList slightly better
         for(int i = 0; i < board.length; i++){
             String s = new String(board[i]);
             res.add(s);
