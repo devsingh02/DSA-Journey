@@ -33,6 +33,7 @@
 //         return l;
 //     }
 // }
+
 class Solution {
      static List<List<String>> solveNQueens(int n) {
         // Initialize the chess board with empty cells represented by '.'
@@ -74,9 +75,8 @@ class Solution {
 
     public static List<String> arrayToList(char board[][]){
         List<String> res = new ArrayList<>();   // maybe LinkedList slightly better
-        for(int i = 0; i < board.length; i++){
-            String s = new String(board[i]);
-            res.add(s);
+        for(char[] row : board){
+            res.add(new String(row));
         }
         return res;
     }
