@@ -8,54 +8,47 @@
                 board[i][j] = '.';
             }
         }
-        // Initialize lists to store the solutions
-        List<List<String>> res = new ArrayList<>();
-        // Initialize arrays to keep track of used columns and diagonals
-        int[] usedCols = new int[n];
-        int[] usedLowerDiagonal = new int[2 * n - 1];
-        int[] usedUpperDiagonal = new int[2 * n - 1];
-        // Call the recursive solve method
-        solve(0, board, res, usedCols, usedLowerDiagonal, usedUpperDiagonal);
-        // Return the solutions
-        return res;
-    }
-     // Recursive function to solve the N-Queens problem
-    static void solve(int row, char[][] board, List<List<String>> res, int[] usedCols, int[] usedLowerDiagonal, int[] usedUpperDiagonal){
-        // If all rows are filled with queens, add the solution to the list and return
-        if (row == board.length){
-            res.add(construct(board));
+        List<List<String>> result = new ArrayList<>();
+        int[] usedCols = new int[n];    // 1 if Q present
+        int[] usedLeftDiagonals = new int[2*n - 1];
+        int[] usedRightDiagonals = new int[2*n - 1];
+
+        solve(0, board, usedCols, usedLeftDiagonals, usedRightDiagonals, result);
+        return result;
+     }
+     static void solve(int row, char[][] board, int[] usedCols, int[] usedLeftDiagonals, int[] usedRightDiagonals, List<List<String>> result) {
+        if (row == board.length) {
+            result.add(new ArrayList<>(arrayToList(board)));
             return;
         }
-        // Try placing a queen in each column of the current row
-        for (int col = 0; col < board.length; col++){
-            // Check if the current cell is safe for a queen
-            if(usedCols[col] == 0 && usedLowerDiagonal[col + row] == 0 && usedUpperDiagonal[board.length - 1 + row - col] == 0){
-                // Place the queen in the current cell
+        for (int col = 0; col < board.length; col++) {
+            // Put if Safe
+            if (usedCols[col] == 0 && usedLeftDiagonals[board.length - 1 - row + col] == 0 && usedRightDiagonals[row + col] == 0) {
                 board[row][col] = 'Q';
-                // Mark the used column and diagonals
                 usedCols[col] = 1;
-                usedLowerDiagonal[col + row] = 1;
-                usedUpperDiagonal[board.length - 1 + row - col] = 1;
-                // Recursively solve for the next row
-                solve(row + 1, board, res, usedCols, usedLowerDiagonal, usedUpperDiagonal);
-                // Remove the queen from the current cell
+                usedLeftDiagonals[board.length - 1 - row + col] = 1;
+                usedRightDiagonals[row + col] = 1;
+                solve(row + 1, board, usedCols, usedLeftDiagonals, usedRightDiagonals, result); // all updated
+                //backtrack
                 board[row][col] = '.';
-                // Unmark the used column and diagonals
                 usedCols[col] = 0;
-                usedLowerDiagonal[col + row] = 0;
-                usedUpperDiagonal[board.length - 1 + row - col] = 0;
+                usedLeftDiagonals[board.length - 1 - row + col] = 0;
+                usedRightDiagonals[row + col] = 0;
             }
         }
     }
-    // Helper function to construct a list of strings representing the chess board
-    static List<String> construct(char board[][]){
-        List<String> res = new LinkedList<>();
-        for(int i = 0; i < board.length; i++){
-            String s = new String(board[i]);
-            res.add(s);
+
+    static List<String> arrayToList(char[][] board) {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < board.length; i++) {
+            String row = "";
+            for (int j = 0; j < board.length; j++) {
+                row += board[i][j];
+            }
+            list.add(row);
         }
-        return res;
-    }
+        return list;
+    }   
 }
 
 // // METHOD 1 : Most efficient
