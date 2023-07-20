@@ -17,7 +17,7 @@ class Solution {
      }
      static void solve(int row, char[][] board, int[] usedCols, int[] usedLeftDiagonals, int[] usedRightDiagonals, List<List<String>> result) {
         if (row == board.length) {
-            result.add(arrayToList(board));
+            result.add(new ArrayList<>(arrayToList(board)));
             return;
         }
         for (int col = 0; col < board.length; col++) {
