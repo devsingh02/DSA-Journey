@@ -38,14 +38,11 @@ class Solution {
     }
 
     public static List<String> arrayToList(char board[][]){
-
-        List<String> res = new LinkedList<>();
-
+        List<String> res = new ArrayList<>();
         for(int i = 0; i < board.length; i++){
             String s = new String(board[i]);
             res.add(s);
         }
-
         return res;
     }
     // static List<String> arrayToList(char[][] board) {
