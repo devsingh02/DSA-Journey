@@ -11,9 +11,10 @@ class Solution {
             if (isValid(board, num, row, col)) {
                 board[row][col] = num;
                 if (solve(board, row, col + 1)) return true; // if board can be solved filling this place
-                board[row][col] = '.';
+                
             }
         }
+        board[row][col] = '.'; // BACKTRACK
         return false; // no number able to put
     }
     
