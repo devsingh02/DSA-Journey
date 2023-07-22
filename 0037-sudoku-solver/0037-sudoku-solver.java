@@ -39,8 +39,6 @@
 //     }
 // }
 
-
-
 class Solution {
     public void solveSudoku(char[][] board) {
         solve(board);
