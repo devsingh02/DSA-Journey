@@ -22,24 +22,33 @@
 //     }
 // }
 class Solution {
-    public String getPermutation(int n, int k) {
-        String ans = "";
-        int fact = 1;
-        List<Integer> temp = new ArrayList<Integer>();
-        for(int i=1;i<n;i++){
-            fact = fact * i;
-            temp.add(i);
-        }
-        temp.add(n);
-        k = k-1;
-        while(true){
-            ans = ans + temp.get(k/fact);
-            temp.remove(k/fact);
-            k = k % fact;
-            if(temp.size()==0) break;
-            fact = fact / temp.size();
-            
-        }
-        return ans;
+public String getPermutation(int n, int k) {
+    //assert n >= 1 && n <= 9: "Given n will be between 1 and 9 inclusive.";
+    //assert k >= 1 && k <= factorial(n): "Given k will be between 1 and n! inclusive.";
+
+    List<Integer> candidates = new LinkedList<>();
+    for (int i = 1; i <= n; i++) candidates.add(i);
+
+    // process
+    StringBuilder sb = new StringBuilder(n);
+    for (int count = candidates.size(), factorial = factorial(count) ; count != 0 ; count--) {
+        // [1, f(count-1)]
+        factorial /= count;
+        int index = (k - 1) / factorial; // 0-based index.
+        k = (k - 1) % factorial + 1; // update k.
+
+        sb.append(candidates.remove(index));
     }
+
+    return sb.toString();
+}
+
+
+private int factorial(int n) {
+    int result = 1;
+    for (int i = 2; i <= n ; i++) {
+        result *= i;
+    }
+    return result;
+}
 }
