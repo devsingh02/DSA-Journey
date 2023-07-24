@@ -22,33 +22,37 @@
 //     }
 // }
 class Solution {
-public String getPermutation(int n, int k) {
-    //assert n >= 1 && n <= 9: "Given n will be between 1 and 9 inclusive.";
-    //assert k >= 1 && k <= factorial(n): "Given k will be between 1 and n! inclusive.";
-
-    List<Integer> candidates = new LinkedList<>();
-    for (int i = 1; i <= n; i++) candidates.add(i);
-
-    // process
-    StringBuilder sb = new StringBuilder(n);
-    for (int count = candidates.size(), factorial = factorial(count) ; count != 0 ; count--) {
-        // [1, f(count-1)]
-        factorial /= count;
-        int index = (k - 1) / factorial; // 0-based index.
-        k = (k - 1) % factorial + 1; // update k.
-
-        sb.append(candidates.remove(index));
+    private static int[] fact = {0, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880};
+    
+    private String getPermutation(int n, int k, boolean[] nums, char[] str, int index) {
+        int i = 0, m = nums.length;
+        if(n == 1) {
+            while(i < m && nums[i]) ++i;
+            str[index++]=(char)('0'+i+1);
+            return String.valueOf(str);
+        }
+        if(k == 0) {
+            while(i < m) {
+                if(!nums[i]) str[index++]=(char)('0'+i+1);
+                ++i;
+            }
+            return String.valueOf(str);
+        }
+        
+        int div = k/fact[n-1], mod = k%fact[n-1], j = -1;
+        while(i < m-1 && div != j) {
+            if(!nums[i]) ++j;
+            if(j == div) break;
+            ++i;
+        }
+        str[index++]=(char)('0'+i+1);
+        if(i < m) nums[i]=true;
+        return getPermutation(n-1, mod, nums, str, index); 
     }
 
-    return sb.toString();
-}
-
-
-private int factorial(int n) {
-    int result = 1;
-    for (int i = 2; i <= n ; i++) {
-        result *= i;
+    public String getPermutation(int n, int k) {
+        boolean[] nums = new boolean[n];
+        char[] charArr = new char[n];
+        return getPermutation(n, k-1, nums, charArr, 0);
     }
-    return result;
-}
 }
