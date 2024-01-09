@@ -1,3 +1,4 @@
+// I. TOP-DOWN
 class Solution {
     public boolean canPartition(int[] nums) {
         int range = 0;
@@ -8,7 +9,7 @@ class Solution {
         return knapsackTF(nums, nums.length, range/2);
     }
     public boolean knapsackTF(int[] nums, int n, int sum) {
-        boolean[][] t = new boolean[n+1][sum+1];
+        Boolean[][] t = new Boolean[n+1][sum+1];
 
         for (int i = 0; i <= n; i++) {
             for (int j = 0; j <= sum; j++) {
