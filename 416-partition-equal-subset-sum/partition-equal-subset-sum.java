@@ -10,18 +10,12 @@ class Solution {
     }
     public boolean knapsackTF(int[] nums, int n, int sum) {
         boolean[][] t = new boolean[n+1][sum+1];
+        // BASE CASE
+        for (int j = 0; j <= sum; j++) t[0][j] = false;
+        for (int i = 0; i <= n; i++) t[i][0] = true;
 
-        for (int i = 0; i <= n; i++) {
-            for (int j = 0; j <= sum; j++) {
-                // BASE CASE
-                if (i == 0 && j != 0) {
-                    t[i][j] = false;
-                    continue;
-                }
-                if (j == 0) {
-                    t[i][j] = true;
-                    continue;
-                }
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= sum; j++) {
                 // CHOICE DIAGRAM
                 if (nums[i-1] <= j) 
                     t[i][j] = t[i-1][j-nums[i-1]] || t[i-1][j];
