@@ -26,31 +26,68 @@
 //     }
 // }
 
-// MEMO using 2D Array
+// // MEMO using 2D Array
+// class Solution {
+//     public boolean canPartition(int[] nums) {
+//         int range = 0;
+//         for (int val : nums) range += val;
+//         if (range%2 != 0) return false;
+
+//         int n = nums.length;
+//         int sum = range/2;
+//         Boolean[][] memo = new Boolean[n+1][sum+1];
+//         return knapsackTF(nums, n, sum, memo);
+//     }
+//     public boolean knapsackTF(int[] nums, int n, int sum, Boolean[][] memo) {
+//         // BASE CASE
+//         if (sum == 0) return true;
+//         if (n == 0 & sum != 0) return false;
+//         if (memo[n][sum] != null) return memo[n][sum];
+
+//         // CHOICE DIAGRAM
+//         if (nums[n-1] <= sum) {
+//             memo[n][sum] = knapsackTF(nums, n-1, sum-nums[n-1], memo) || 
+//             knapsackTF(nums, n-1, sum, memo);
+//         }
+//         else memo[n][sum] = knapsackTF(nums, n-1, sum, memo);
+
+//         return memo[n][sum];
+//     }
+// }
+
+// MEMO using HashMap
+import java.util.HashMap;
+import java.util.Map;
+
 class Solution {
     public boolean canPartition(int[] nums) {
         int range = 0;
         for (int val : nums) range += val;
-        if (range%2 != 0) return false;
+        if (range % 2 != 0) return false;
 
         int n = nums.length;
-        int sum = range/2;
-        Boolean[][] memo = new Boolean[n+1][sum+1];
-        return knapsackTF(nums, n, sum, memo);
+        Map<String, Boolean> memo = new HashMap<>();
+        return knapsackTF(nums, n, range / 2, memo);
     }
-    public boolean knapsackTF(int[] nums, int n, int sum, Boolean[][] memo) {
+
+    boolean knapsackTF(int[] nums, int n, int sum, Map<String, Boolean> memo) {
         // BASE CASE
         if (sum == 0) return true;
-        if (n == 0 & sum != 0) return false;
-        if (memo[n][sum] != null) return memo[n][sum];
+        if (n == 0) return false;
+
+        String key = n + "-" + sum;
+        if (memo.containsKey(key)) {
+            return memo.get(key);
+        }
 
         // CHOICE DIAGRAM
-        if (nums[n-1] <= sum) {
-            memo[n][sum] = knapsackTF(nums, n-1, sum-nums[n-1], memo) || 
-            knapsackTF(nums, n-1, sum, memo);
-        }
-        else memo[n][sum] = knapsackTF(nums, n-1, sum, memo);
+        boolean tempans;
+        if (nums[n - 1] <= sum) 
+            tempans = knapsackTF(nums, n - 1, sum - nums[n - 1], memo) || knapsackTF(nums, n - 1, sum, memo);
+        else tempans = knapsackTF(nums, n - 1, sum, memo);
+        
 
-        return memo[n][sum];
+        memo.put(key, tempans);
+        return tempans;
     }
 }
