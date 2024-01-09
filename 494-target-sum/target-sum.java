@@ -1,34 +1,4 @@
-// class Solution {
-//     public int findTargetSumWays(int[] nums, int target) {
-//         int range = 0;
-//         for (int num : nums) range += num;
-//         if (((range+target) % 2 != 0) || (target > range)) return 0;
-//         int sum = (range + target)/2;
-//         int n = nums.length;
-//         int[][] memo = new int[n+1][sum+1];
-//         for (int i = 0; i < n+1; i++) {
-//             for (int j = 0; j < sum+1; j++) {
-//                 memo[i][j] = -1;
-//             }
-//         }
-//         return knap(nums, n, sum, memo);
-//     }
-//     int knap(int[] nums, int n, int sum, int[][] memo) {
-//         // BASE CASE
-//         if (sum == 0) return 1;
-//         if (n == 0) return 0;
-//         if (memo[n][sum] != -1) return memo[n][sum];
-//         // CHOICE DIAGRAM
-//         if (nums[n-1] <= sum)
-//             memo[n][sum] = knap(nums, n-1, sum-nums[n-1], memo) 
-//             + knap(nums, n-1, sum, memo);
-//         else memo[n][sum] = knap(nums, n-1, sum, memo);
-
-//         return memo[n][sum];
-//     }
-// }
-
-// ADITYA VERMA TOP DOWN
+// // ADITYA VERMA TOP DOWN
 // class Solution {
 //     public int findTargetSumWays(int[] nums, int target) {
 //         //Solution 1
@@ -55,7 +25,7 @@
 //     }
 // }
 
-// CHATGPT 2D MEMOIZE
+// ADITYA VERMA 2D MEMOIZE
 class Solution {
     public int findTargetSumWays(int[] nums, int target) {
         int range = 0;
