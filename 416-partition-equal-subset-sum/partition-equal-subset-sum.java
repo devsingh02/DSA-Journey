@@ -9,7 +9,7 @@ class Solution {
         return knapsackTF(nums, nums.length, range/2);
     }
     public boolean knapsackTF(int[] nums, int n, int sum) {
-        Boolean[][] t = new Boolean[n+1][sum+1];
+        boolean[][] t = new boolean[n+1][sum+1];
         // BASE CASE
         for (int j = 0; j <= sum; j++) t[0][j] = false;
         for (int i = 0; i <= n; i++) t[i][0] = true;
