@@ -55,6 +55,62 @@
 //     }
 // }
 
+// CHATGPT 2D MEMOIZE
+// class Solution {
+//     public int findTargetSumWays(int[] nums, int target) {
+//         int sum = 0;
+//         for (int x : nums)
+//             sum += x;
+
+//         if (((sum - target) % 2 == 1) || (target > sum))
+//             return 0;
+
+//         int n = nums.length;
+//         int s2 = (sum - target) / 2;
+
+//         // Memoization table
+//         int[][] memo = new int[n + 1][s2 + 1];
+//         for (int i = 0; i <= n; i++) {
+//             for (int j = 0; j <= s2; j++) {
+//                 memo[i][j] = -1; // Initialize with a value that indicates the result is not computed yet
+//             }
+//         }
+
+//         return memoizedCountWays(nums, n, s2, memo);
+//     }
+
+//     private int memoizedCountWays(int[] nums, int i, int target, int[][] memo) {
+//         // Base cases
+//         if (i == 0 && target == 0) {
+//             return 1;
+//         }
+//         if (i == 0) {
+//             return 0;
+//         }
+
+//         // Check if the result is already computed
+//         if (memo[i][target] != -1) {
+//             return memo[i][target];
+//         }
+
+//         // Memoize the result and return it
+//         int result;
+//         if (nums[i - 1] <= target) {
+//             result = memoizedCountWays(nums, i - 1, target - nums[i - 1], memo) +
+//                      memoizedCountWays(nums, i - 1, target, memo);
+//         } else {
+//             result = memoizedCountWays(nums, i - 1, target, memo);
+//         }
+
+//         memo[i][target] = result;
+//         return result;
+//     }
+// }
+
+
+import java.util.HashMap;
+import java.util.Map;
+
 class Solution {
     public int findTargetSumWays(int[] nums, int target) {
         int sum = 0;
@@ -68,17 +124,12 @@ class Solution {
         int s2 = (sum - target) / 2;
 
         // Memoization table
-        int[][] memo = new int[n + 1][s2 + 1];
-        for (int i = 0; i <= n; i++) {
-            for (int j = 0; j <= s2; j++) {
-                memo[i][j] = -1; // Initialize with a value that indicates the result is not computed yet
-            }
-        }
-
+        Map<String, Integer> memo = new HashMap<>();
+        
         return memoizedCountWays(nums, n, s2, memo);
     }
 
-    private int memoizedCountWays(int[] nums, int i, int target, int[][] memo) {
+    private int memoizedCountWays(int[] nums, int i, int target, Map<String, Integer> memo) {
         // Base cases
         if (i == 0 && target == 0) {
             return 1;
@@ -88,8 +139,9 @@ class Solution {
         }
 
         // Check if the result is already computed
-        if (memo[i][target] != -1) {
-            return memo[i][target];
+        String key = i + "-" + target;
+        if (memo.containsKey(key)) {
+            return memo.get(key);
         }
 
         // Memoize the result and return it
@@ -101,7 +153,7 @@ class Solution {
             result = memoizedCountWays(nums, i - 1, target, memo);
         }
 
-        memo[i][target] = result;
+        memo.put(key, result);
         return result;
     }
 }
