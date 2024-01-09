@@ -28,29 +28,80 @@
 //     }
 // }
 
+// ADITYA VERMA TOP DOWN
+// class Solution {
+//     public int findTargetSumWays(int[] nums, int target) {
+//         //Solution 1
+//         int sum = 0;
+//         for(int x : nums)
+//             sum += x;
+//         if(((sum - target) % 2 == 1) || (target > sum))
+//             return 0;
+        
+//         int n = nums.length;
+//         int s2 = (sum - target)/2;
+//         int[][] t = new int[n + 1][s2 + 1];
+//         t[0][0] = 1;
+        
+//         for(int i = 1; i < n + 1; i++) {
+//             for(int j = 0; j < s2 + 1; j++) {
+//                 if(nums[i - 1] <= j)
+//                     t[i][j] = t[i-1][j] + t[i - 1][j - nums[i - 1]];
+//                 else
+//                     t[i][j] = t[i - 1][j];
+//             }
+//         }
+//         return t[n][s2];
+//     }
+// }
 
 class Solution {
     public int findTargetSumWays(int[] nums, int target) {
-        //Solution 1
         int sum = 0;
-        for(int x : nums)
+        for (int x : nums)
             sum += x;
-        if(((sum - target) % 2 == 1) || (target > sum))
+
+        if (((sum - target) % 2 == 1) || (target > sum))
             return 0;
-        
+
         int n = nums.length;
-        int s2 = (sum - target)/2;
-        int[][] t = new int[n + 1][s2 + 1];
-        t[0][0] = 1;
-        
-        for(int i = 1; i < n + 1; i++) {
-            for(int j = 0; j < s2 + 1; j++) {
-                if(nums[i - 1] <= j)
-                    t[i][j] = t[i-1][j] + t[i - 1][j - nums[i - 1]];
-                else
-                    t[i][j] = t[i - 1][j];
+        int s2 = (sum - target) / 2;
+
+        // Memoization table
+        int[][] memo = new int[n + 1][s2 + 1];
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= s2; j++) {
+                memo[i][j] = -1; // Initialize with a value that indicates the result is not computed yet
             }
         }
-        return t[n][s2];
+
+        return memoizedCountWays(nums, n, s2, memo);
+    }
+
+    private int memoizedCountWays(int[] nums, int i, int target, int[][] memo) {
+        // Base cases
+        if (i == 0 && target == 0) {
+            return 1;
+        }
+        if (i == 0) {
+            return 0;
+        }
+
+        // Check if the result is already computed
+        if (memo[i][target] != -1) {
+            return memo[i][target];
+        }
+
+        // Memoize the result and return it
+        int result;
+        if (nums[i - 1] <= target) {
+            result = memoizedCountWays(nums, i - 1, target - nums[i - 1], memo) +
+                     memoizedCountWays(nums, i - 1, target, memo);
+        } else {
+            result = memoizedCountWays(nums, i - 1, target, memo);
+        }
+
+        memo[i][target] = result;
+        return result;
     }
 }
