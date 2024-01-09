@@ -1,4 +1,4 @@
-// // I. TOP-DOWN
+// // I. TOP-DOWN => takes time since calculates each and every possible soln.
 // class Solution {
 //     public boolean canPartition(int[] nums) {
 //         int range = 0;
@@ -26,68 +26,68 @@
 //     }
 // }
 
-// // MEMO using 2D Array
-// class Solution {
-//     public boolean canPartition(int[] nums) {
-//         int range = 0;
-//         for (int val : nums) range += val;
-//         if (range%2 != 0) return false;
-
-//         int n = nums.length;
-//         int sum = range/2;
-//         Boolean[][] memo = new Boolean[n+1][sum+1];
-//         return knapsackTF(nums, n, sum, memo);
-//     }
-//     public boolean knapsackTF(int[] nums, int n, int sum, Boolean[][] memo) {
-//         // BASE CASE
-//         if (sum == 0) return true;
-//         if (n == 0 & sum != 0) return false;
-//         if (memo[n][sum] != null) return memo[n][sum];
-
-//         // CHOICE DIAGRAM
-//         if (nums[n-1] <= sum) {
-//             memo[n][sum] = knapsackTF(nums, n-1, sum-nums[n-1], memo) || 
-//             knapsackTF(nums, n-1, sum, memo);
-//         }
-//         else memo[n][sum] = knapsackTF(nums, n-1, sum, memo);
-
-//         return memo[n][sum];
-//     }
-// }
-
-// MEMO using HashMap
-import java.util.HashMap;
-import java.util.Map;
-
+// II. MEMO using 2D Array => takes very less time
 class Solution {
     public boolean canPartition(int[] nums) {
         int range = 0;
         for (int val : nums) range += val;
-        if (range % 2 != 0) return false;
+        if (range%2 != 0) return false;
 
         int n = nums.length;
-        Map<String, Boolean> memo = new HashMap<>();
-        return knapsackTF(nums, n, range / 2, memo);
+        int sum = range/2;
+        Boolean[][] memo = new Boolean[n+1][sum+1];
+        return knapsackTF(nums, n, sum, memo);
     }
-
-    boolean knapsackTF(int[] nums, int n, int sum, Map<String, Boolean> memo) {
+    public boolean knapsackTF(int[] nums, int n, int sum, Boolean[][] memo) {
         // BASE CASE
         if (sum == 0) return true;
-        if (n == 0) return false;
-
-        String key = n + "-" + sum;
-        if (memo.containsKey(key)) {
-            return memo.get(key);
-        }
+        if (n == 0 & sum != 0) return false;
+        if (memo[n][sum] != null) return memo[n][sum];
 
         // CHOICE DIAGRAM
-        boolean tempans;
-        if (nums[n - 1] <= sum) 
-            tempans = knapsackTF(nums, n - 1, sum - nums[n - 1], memo) || knapsackTF(nums, n - 1, sum, memo);
-        else tempans = knapsackTF(nums, n - 1, sum, memo);
-        
+        if (nums[n-1] <= sum) {
+            memo[n][sum] = knapsackTF(nums, n-1, sum-nums[n-1], memo) || 
+            knapsackTF(nums, n-1, sum, memo);
+        }
+        else memo[n][sum] = knapsackTF(nums, n-1, sum, memo);
 
-        memo.put(key, tempans);
-        return tempans;
+        return memo[n][sum];
     }
 }
+
+// // III. MEMO using HashMap => takes a lot of time
+// import java.util.HashMap;
+// import java.util.Map;
+
+// class Solution {
+//     public boolean canPartition(int[] nums) {
+//         int range = 0;
+//         for (int val : nums) range += val;
+//         if (range % 2 != 0) return false;
+
+//         int n = nums.length;
+//         Map<String, Boolean> memo = new HashMap<>();
+//         return knapsackTF(nums, n, range / 2, memo);
+//     }
+
+//     boolean knapsackTF(int[] nums, int n, int sum, Map<String, Boolean> memo) {
+//         // BASE CASE
+//         if (sum == 0) return true;
+//         if (n == 0) return false;
+
+//         String key = n + "-" + sum;
+//         if (memo.containsKey(key)) {
+//             return memo.get(key);
+//         }
+
+//         // CHOICE DIAGRAM
+//         boolean tempans;
+//         if (nums[n - 1] <= sum) 
+//             tempans = knapsackTF(nums, n - 1, sum - nums[n - 1], memo) || knapsackTF(nums, n - 1, sum, memo);
+//         else tempans = knapsackTF(nums, n - 1, sum, memo);
+        
+
+//         memo.put(key, tempans);
+//         return tempans;
+//     }
+// }
