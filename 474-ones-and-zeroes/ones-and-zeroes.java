@@ -5,7 +5,7 @@ class Solution {
         return solve(strs, memo, N, m, n);
     }
     int solve(String[] str, Map<String,Integer> memo, int n, int M, int N) {
-        if (n==0&&M==0&&N==0) return 0;
+        // if (n==0&&M==0&&N==0) return 0;
         if (M < 0 || N < 0) return 0;
         if (n == 0) return 0;
         String key = n + " " + M + "-" + N;
