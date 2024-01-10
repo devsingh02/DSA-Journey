@@ -5,9 +5,10 @@ class Solution {
         return solve(strs, memo, N, m, n);
     }
     int solve(String[] str, Map<String,Integer> memo, int n, int M, int N) {
-        // if (n==0&&M==0&&N==0) return 0;
+        // BASE CASES :- if this occurs no way (Smallest Valid + Invalid input)
         if (M < 0 || N < 0) return 0;
         if (n == 0) return 0;
+
         String key = n + " " + M + "-" + N;
         if (memo.containsKey(key)) return memo.get(key);
 
