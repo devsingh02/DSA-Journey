@@ -1,3 +1,4 @@
+// HASHMAP MEMO
 // class Solution {
 //     public int findMaxForm(String[] strs, int m, int n) {
 //         int N = strs.length;
@@ -38,6 +39,7 @@
 //     }
 // }
 
+// 3D ARRAY MEMO
 class Solution {
     public int findMaxForm(String[] strs, int m, int n) {
         int N = strs.length;
@@ -60,8 +62,7 @@ class Solution {
         else
             ans = solve(str, memo, n-1, M, N);
 
-        memo[n][M][N] = ans;
-        return ans;
+        return memo[n][M][N] = ans;
     }
 
     int zeros(String s) {
