@@ -1,61 +1,34 @@
-// class Solution {
-//     public static int mod = 1000000007;
+class Solution {
+    public static int mod = (int)(1e9 + 7);
 
-//     public int numberOfWays(int num, int x) {
-//         int n = (int) Math.round(Math.pow(num, 1.0 / x)); // Use 1.0 
-//         int sum = num;
-//         int[][] memo = new int[n + 1][sum + 1];
-//         for (int i = 0; i <= n; i++) {
-//             for (int j = 0; j <= sum; j++) {
-//                 memo[i][j] = -1;
-//             }
-//         }
-//         return solve(n, sum, x, memo);
-//     }
+    public int numberOfWays(int num, int x) {
+        int n = (int) Math.round(Math.pow(num, 1.0 / x)); // Use 1.0 
+        int sum = num;
+        int[][] memo = new int[n + 1][sum + 1];
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= sum; j++) {
+                memo[i][j] = -1;
+            }
+        }
+        return solve(n, sum, x, memo);
+    }
 
-//     int solve(int n, int sum, int x, int[][] memo) {
-//         if (sum == 0 && n == 0) return 1;
-//         if (n == 0) return 0;
+    int solve(int n, int sum, int x, int[][] memo) {
+        if (sum == 0 && n == 0) return 1;
+        if (n == 0) return 0;
 
-//         if (memo[n][sum] != -1) return memo[n][sum];
+        if (memo[n][sum] != -1) return memo[n][sum];
 
-//         int val = (int) Math.pow(n, x); // Cast to int after taking the power
-//         int tempans;
+        int val = (int) Math.pow(n, x); // Cast to int after taking the power
+        int tempans;
 
-//         if (val <= sum) 
-//             tempans = (solve(n - 1, sum - val, x, memo) % mod + solve(n - 1, sum, x, memo) % mod) % mod;
-//         else tempans = solve(n - 1, sum, x, memo) % mod;
+        if (val <= sum) 
+            tempans = (solve(n - 1, sum - val, x, memo) % mod + solve(n - 1, sum, x, memo) % mod) % mod;
+        else tempans = solve(n - 1, sum, x, memo) % mod;
         
 
-//         memo[n][sum] = tempans;
-//         return tempans;
-//     }
-// }
-
-
-class Solution {
-    int mod = (int)(1e9 + 7);
-    public int helper(int num, int n, int x, int[][] dp) {
-        if(n == 0) return 1;
-        if(num > n) return 0;
-
-        if(dp[num][n] != -1) return dp[num][n];
-
-        // notTake
-        int notTake = helper(num+1, n, x, dp);
-        // take
-        int take = 0;
-        int sum = (int)Math.pow(num, x);
-        if(sum <= n) {
-            take = helper(num+1, n-sum, x, dp);
-        }
-        return dp[num][n] = (take + notTake) % mod;
-    }   
-    public int numberOfWays(int n, int x) {
-        int[][] dp = new int[301][n+1];
-        for(int[] row: dp) {
-            Arrays.fill(row, -1);
-        }
-        return helper(1, n, x, dp) % mod;   
+        memo[n][sum] = tempans;
+        return tempans;
     }
 }
+
