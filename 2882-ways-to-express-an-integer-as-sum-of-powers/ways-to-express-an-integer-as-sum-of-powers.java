@@ -2,11 +2,11 @@ class Solution {
     public static int mod = 1000000007;
 
     public int numberOfWays(int n, int x) {
-        // int nn = (int)Math.pow(n, 1.0 / x); // Use 1.0 to ensure double division
-        int nn = 1;
-        while (Math.pow(nn, x) <= n) {
-            nn++;
-        }
+        int nn = (int) Math.round(Math.pow(n, 1.0 / x)); // Use 1.0 to ensure double division
+        // int nn = 1;
+        // while (Math.pow(nn, x) <= n) {
+        //     nn++;
+        // }
         int sum = n;
         int[][] memo = new int[nn + 1][sum + 1];
         for (int i = 0; i <= nn; i++) {
