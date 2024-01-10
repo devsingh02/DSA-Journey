@@ -23,10 +23,10 @@ class Solution {
         int tempans;
 
         if (val <= sum) 
-            tempans = (solve(n - 1, sum - val, x, memo) % mod + solve(n - 1, sum, x, memo) % mod) % mod;
-        else tempans = solve(n - 1, sum, x, memo) % mod;
+            tempans = solve(n - 1, sum - val, x, memo)  + solve(n - 1, sum, x, memo);
+        else tempans = solve(n - 1, sum, x, memo);
         
-        return memo[n][sum] = tempans;
+        return memo[n][sum] = tempans% mod;
     }
 }
 
