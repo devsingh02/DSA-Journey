@@ -19,14 +19,13 @@ class Solution {
 
         if (memo[n][sum] != -1) return memo[n][sum];
 
-        int val = (int) Math.pow(n, x) % mod; // Cast to int after taking the power
+        int val = (int) Math.pow(n, x); // Cast to int after taking the power
         int tempans;
 
-        if (val <= sum) {
-            tempans = (solve(n - 1, sum - val, x, memo) + solve(n - 1, sum, x, memo)) % mod;
-        } else {
-            tempans = solve(n - 1, sum, x, memo) % mod;
-        }
+        if (val <= sum) 
+            tempans = (solve(n - 1, sum - val, x, memo) % mod + solve(n - 1, sum, x, memo) % mod) % mod;
+        else tempans = solve(n - 1, sum, x, memo) % mod;
+        
 
         memo[n][sum] = tempans;
         return tempans;
