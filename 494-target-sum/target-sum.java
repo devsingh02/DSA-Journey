@@ -61,7 +61,6 @@ class Solution {
             + Knap(nums, n - 1, sum, memo);
         else tempans = Knap(nums, n - 1, sum, memo);
         
-        memo[n][sum] = tempans;
-        return memo[n][sum];
+        return memo[n][sum] = tempans;
     }
 }
