@@ -26,7 +26,7 @@ class Solution {
             tempans = solve(n - 1, sum - val, x, memo)  + solve(n - 1, sum, x, memo);
         else tempans = solve(n - 1, sum, x, memo);
         
-        return memo[n][sum] = tempans% mod;
+        return memo[n][sum] = tempans % mod;
     }
 }
 
