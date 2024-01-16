@@ -17,17 +17,34 @@
 //     }
 // }
 
-// TABULATION
+// // TABULATION
+// class Solution {
+//     public int rob(int[] nums) {
+//         int n = nums.length;
+//         int[] dp = new int[n];
+//         dp[0] = nums[0];
+//         for (int i = 1; i < n; i++) {
+//             int pick = nums[i] + ((i >= 2) ? dp[i-2] : 0);
+//             int notpick = 0 + dp[i-1];
+//             dp[i] = Math.max(pick, notpick);
+//         }
+//         return dp[n-1];
+//     }
+// }
+
+// SPACE OPT.
 class Solution {
     public int rob(int[] nums) {
         int n = nums.length;
-        int[] dp = new int[n];
-        dp[0] = nums[0];
+        int prev1 = nums[0];
+        int prev2 = 0;
         for (int i = 1; i < n; i++) {
-            int pick = nums[i] + ((i >= 2) ? dp[i-2] : 0);
-            int notpick = 0 + dp[i-1];
-            dp[i] = Math.max(pick, notpick);
+            int pick = nums[i] + prev2;
+            int notpick = 0 + prev1;
+            int curr = Math.max(pick, notpick);
+            prev2 = prev1;
+            prev1 = curr;
         }
-        return dp[n-1];
+        return prev1;
     }
 }
